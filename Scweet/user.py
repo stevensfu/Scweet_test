@@ -3,6 +3,91 @@ from time import sleep
 import random
 import json
 
+def get_user_information_test(users, driver=None, headless=True):
+    """ get user information if the "from_account" argument is specified """
+
+    driver = utils.init_driver(headless=headless)
+
+    users_info = {}
+
+    for i, user in enumerate(users):
+
+        log_user_page(user, driver)
+
+        if user is not None:
+
+            try:
+                # following = driver.find_element_by_xpath(
+                #     '//a[contains(@href,"/following")]/span[1]/span[1]').text
+                followers = driver.find_element_by_xpath(
+                    '//a[contains(@href,"/followers")]/span[1]/span[1]').text
+            except Exception as e:
+                # print(e)
+                continue
+
+            # try:
+            #     element = driver.find_element_by_xpath('//div[contains(@data-testid,"UserProfileHeader_Items")]//a[1]')
+            #     website = element.get_attribute("href")
+            # except Exception as e:
+            #     # print(e)
+            #     website = ""
+
+            # try:
+            #     desc = driver.find_element_by_xpath('//div[contains(@data-testid,"UserDescription")]').text
+            # except Exception as e:
+            #     # print(e)
+            #     desc = ""
+            # a = 0
+            # try:
+            #     join_date = driver.find_element_by_xpath(
+            #         '//div[contains(@data-testid,"UserProfileHeader_Items")]/span[3]').text
+            #     birthday = driver.find_element_by_xpath(
+            #         '//div[contains(@data-testid,"UserProfileHeader_Items")]/span[2]').text
+            #     location = driver.find_element_by_xpath(
+            #         '//div[contains(@data-testid,"UserProfileHeader_Items")]/span[1]').text
+            # except Exception as e:
+            #     # print(e)
+            #     try:
+            #         join_date = driver.find_element_by_xpath(
+            #             '//div[contains(@data-testid,"UserProfileHeader_Items")]/span[2]').text
+            #         span1 = driver.find_element_by_xpath(
+            #             '//div[contains(@data-testid,"UserProfileHeader_Items")]/span[1]').text
+            #         if hasNumbers(span1):
+            #             birthday = span1
+            #             location = ""
+            #         else:
+            #             location = span1
+            #             birthday = ""
+            #     except Exception as e:
+            #         # print(e)
+            #         try:
+            #             join_date = driver.find_element_by_xpath(
+            #                 '//div[contains(@data-testid,"UserProfileHeader_Items")]/span[1]').text
+            #             birthday = ""
+            #             location = ""
+            #         except Exception as e:
+            #             # print(e)
+            #             join_date = ""
+            #             birthday = ""
+            #             location = ""
+            print("$" + user)
+            #print("Following : ", following)
+            print("~", followers)
+            # print("Location : ", location)
+            # print("Join date : ", join_date)
+            # print("Birth date : ", birthday)
+            # print("Description : ", desc)
+            # print("Website : ", website)
+            #users_info[user] = [following, followers, join_date, birthday, location, website, desc]
+            users_info[user] = [followers]
+
+            if i == len(users) - 1:
+                #driver.close()
+                print('ok！！！！！！！！！！！！！！ 了')
+                return users_info
+        else:
+            print("You must specify the user")
+            continue
 
 def get_user_information(users, driver=None, headless=True):
     """ get user information if the "from_account" argument is specified """
